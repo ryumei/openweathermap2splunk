@@ -1,0 +1,10 @@
+[openweathermap]
+apikey = b6907d289e10d714a6e88b30761fae22
+url = http://samples.openweathermap.org/data/2.5/weather
+location = London,uk
+
+[splunk]
+url = http://127.0.0.1:8088/services/collector/event
+token = changeme
+hostname = openweathermap
+metric_index = test_metrics
