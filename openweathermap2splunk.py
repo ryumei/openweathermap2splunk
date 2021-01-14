@@ -37,7 +37,7 @@ def post_splunk(url, token, data, index=None):
         })
 
     headers = {'Authorization': 'Splunk {}'.format(token)}
-    res = requests.post(url=url, headers=headers, json=payload)
+    res = requests.post(url=url, headers=headers, json=payload, verify=False)
     res.raise_for_status()
     return res.json()
 
@@ -46,6 +46,7 @@ def main(conf):
         endpoint=conf.get('openweathermap', 'url'),
         apikey=conf.get('openweathermap', 'apikey'),
         location=conf.get('openweathermap', 'location'))
+    logging.info(data)
 
     result = post_splunk(
         url=conf.get('splunk', 'url'),
@@ -54,6 +55,8 @@ def main(conf):
         index=conf.get('splunk', 'metric_index'))
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.WARNING, format="%(asctime)s %(module)s:%(lineno)d %(levelname)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+
     from argparse import ArgumentParser
     from six.moves.configparser import ConfigParser
     parser = ArgumentParser()
